@@ -49,23 +49,43 @@ int main (){
 
 void HomeScreen(){
 
-    char start[5];
+    char start[10];
+    printf( //off formatting sa code pero oks pag compiled
+        "  _______                                                     __           \n"
+        " |       \\                                                   |  \\        \n"
+        " | $$$$$$$\\  ______    ______       __   ______    _______  _| $$_        \n"
+        " | $$__/ $$ /      \\  /      \\     |  \\ /      \\  /       \\|   $$ \\  \n"
+        " | $$    $$| $$$$$$ \\| $$$$$$ \\    | $$| $$$$$$ \\ |$$$$$$$ \\$$$$$$     \n"
+        " | $$$$$$$ | $$   \\$$| $$  | $$    | &&| $$    $$ |$$        | $$ __      \n"
+        " | $$      | $$      | $$__/ $$    | $$| $$$$$$$$ |$$_____   | $$|  \\     \n"
+        " | $$      | $$       \\$$    $$    | $$ \\$$     \\ \\$$     \\   \\$$  $$\n"
+        "  \\$$       \\$$        \\$$$$$$__   | $$  \\$$$$$$$  \\$$$$$$$    \\$$$$ \n"
+        "                             |  \\__/ $$                                   \n"
+        "                             \\$$    $$                                    \n"
+        "                              \\$$$$$$                                     \n"
+        "  ______                                                                   \n"
+        " /      \\                                                                 \n"
+        "|  $$$$$$\\  ______    _______  ______   _______    ______                 \n"
+        "| $$__| $$ /      \\  /       \\|      \\ |       \\  /      \\            \n"
+        "| $$    $$|  $$$$$$\\|  $$$$$$$ \\$$$$$$\\| $$$$$$$\\|  $$$$$$\\           \n"
+        "| $$$$$$$$| $$   \\$$| $$      /      $$| $$  | $$| $$    $$               \n"
+        "| $$  | $$| $$      | $$_____|  $$$$$$$| $$  | $$| $$$$$$$$                \n"
+        "| $$  | $$| $$       \\$$     \\\\$$    $$| $$  | $$ \\$$     \\           \n"
+        " \\$$   \\$$ \\$$        \\$$$$$$$ \\$$$$$$$ \\$$   \\$$  \\$$$$$$$        \n"
+    );
 
-    printf("TEST HOMESCREEN");
-    printf("WELCOME TO PROJECT ARCANE");
-    printf("A 1v1 Turn-Based Game");
+    printf("WELCOME TO PROJECT ARCANE \n" "A 1v1 Turn-Based Game \n" "\n");
     printf("Type start to play: ");
-
-    scanf("%c", &start);
-
+    scanf("%s", &start);
     system("cls");
 
-    if(start == "start"){
-    
+
+    if(strcmp(start, "start") == 0){
+        printf("Main Menu:");
     }
 
     else{
-        printf("type start");
         HomeScreen();
+        printf("Please type start only. /n");
     }
 }
