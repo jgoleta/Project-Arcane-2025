@@ -1,0 +1,191 @@
+void GuideMenu() {
+    printf("Here are five simple tips to guide you in the game:\n\n");
+    printf("1. Understand each character in the game. Each has unique attributes and abilities.\n");
+    printf("2. To acquire mana, use basic attack. A basic attack gains a player 10 mana.\n");
+    printf("3. Check status every once in a while to keep an eye on your health and attributes.\n");
+    printf("4. This is a turn-based strategy game. Make sure to think of your next move.\n");
+    printf("5. Master the effects:\n  - Critical hits can turn the battle in your favor.\n  - Understand how effects like bleeding or stun impact the opponent over multiple turns.\n");
+    printf("6. Enjoy the game.\n");
+
+    char choice[10];
+    printf("\nType 'menu' to return: ");
+    scanf("%s", choice);
+
+    system("cls");
+
+    if (strcmp(choice, "menu") == 0) {
+        MenuScreen();
+    } else {
+        printf("Invalid input. Please try again.\n");
+        GuideMenu();
+    }
+}
+
+
+
+
+int CharacterAssign(int playerIndex) {
+    if (strcmp(player[playerIndex - 1].character, "Thorin") == 0) {
+        player[playerIndex - 1].health = 350;
+        player[playerIndex - 1].mana = 100;
+        player[playerIndex - 1].damage = 25;
+        player[playerIndex - 1].armor = 5;
+        strcpy(player[playerIndex - 1].ability, "Divine Shield (20 Mana Cost)");
+        strcpy(player[playerIndex - 1].ultimate, "A Blessing From Above (50 Mana Cost)");
+        return 1;
+    } else if (strcmp(player[playerIndex - 1].character, "Daxton") == 0) {
+        player[playerIndex - 1].health = 400;
+        player[playerIndex - 1].mana = 100;
+        player[playerIndex - 1].damage = 15;
+        player[playerIndex - 1].armor = 15;
+        strcpy(player[playerIndex - 1].ability, "Headbutt (20 Mana Cost)");
+        strcpy(player[playerIndex - 1].ultimate, "A Juggernaut's Last Stand (50 Mana Cost)");
+        return 1;
+    } else if (strcmp(player[playerIndex - 1].character, "Joji") == 0) {
+        player[playerIndex - 1].health = 300;
+        player[playerIndex - 1].mana = 100;
+        player[playerIndex - 1].damage = 30;
+        player[playerIndex - 1].armor = 5;
+        strcpy(player[playerIndex - 1].ability, "Black Flash (20 Mana Cost)");
+        strcpy(player[playerIndex - 1].ultimate, "Domain Expansion: Eternal Amplification (50 Mana Cost)");
+        return 1;
+    } else if (strcmp(player[playerIndex - 1].character, "Walter") == 0) {
+        player[playerIndex - 1].health = 300;
+        player[playerIndex - 1].mana = 100;
+        player[playerIndex - 1].damage = 35;
+        player[playerIndex - 1].armor = 2;
+        strcpy(player[playerIndex - 1].ability, "Magnificent Slash (20 Mana Cost)");
+        strcpy(player[playerIndex - 1].ultimate, "My Final Ecstasy (50 Mana Cost)");
+        return 1;
+    } else if (strcmp(player[playerIndex - 1].character, "Lilith") == 0) {
+        player[playerIndex - 1].health = 300;
+        player[playerIndex - 1].mana = 100;
+        player[playerIndex - 1].damage = 30;
+        player[playerIndex - 1].armor = 2;
+        strcpy(player[playerIndex - 1].ability, "Essence Theft (10 Mana Cost)");
+        strcpy(player[playerIndex - 1].ultimate, "Heartstealer (50 Mana Cost)");
+        return 1;
+    }
+    return 0;
+}
+
+
+
+void CharacterPick() {
+    for (int playerIndex = 1; playerIndex < PLAYERS + 1; playerIndex++) {
+        int validSelection = 0;
+
+        while (!validSelection) {
+            printf("\nChoose character for Player %d:\n", playerIndex);
+            printf("1. Thorin: Holy Paladin\n");
+            printf("2. Daxton: Wild Juggernaut\n");
+            printf("3. Joji: Jujutsu Sorcerer\n");
+            printf("4. Walter: Lavish Swordsman\n");
+            printf("5. Lilith: Mystic Siphoner\n");
+            printf("\nWho's your character: ");
+            scanf("%s", player[playerIndex - 1].character);
+
+            validSelection = CharacterAssign(playerIndex);
+
+            if (!validSelection) {
+                printf("Invalid selection. Try again.\n");
+            }
+        }
+    }
+
+    system("cls");
+
+    printf("\nIt's time for %s vs. %s!\n", player[PLAYER_ONE].character, player[PLAYER_TWO].character);
+    printf("Now, let the fight begin!\n");
+
+    GameProper();
+}
+
+
+
+int DamageCalculation(int attacking_player, int target_player) {
+    int originalDamage = player[attacking_player].damage;
+
+    if (strcmp(player[attacking_player].crit_chance, "20%") == 0) {
+        // Since 20% is also 1 out of 5 odds
+        int randnum = (rand() % 5) + 1;
+        int critdamage = (rand() % 10) + 16;
+        if (randnum == 1) {
+            originalDamage += critdamage;
+            printf("\nCRITICAL HIT!\n");
+        }
+    }
+    else if (strcmp(player[attacking_player].crit_chance, "25%") == 0) {
+        // Since 25% is also 1 out of 4 odds
+        int randnum = (rand() % 4) + 1;
+        int critdamage = (rand() % 10) + 16;
+        if (randnum == 1) {
+            originalDamage += critdamage;
+            printf("\nCRITICAL HIT!\n");
+        }
+    }
+
+    // For armor mitigation
+    if (player[target_player].armor > 0) {
+        int mitigatedDamage = originalDamage - player[target_player].armor;
+        // Make sure damage doesn't go negative
+        if (mitigatedDamage < 0) {
+            mitigatedDamage = 0;
+        }
+        return mitigatedDamage;
+    }
+
+    // If there's no armor, return original damage
+    return originalDamage;
+}
+
+void PlayAgain() {
+    char type[10];
+    printf("Do you want to play again?\nYes or No: ");
+    scanf("%s", type);
+
+    system("cls");
+
+    if (strcmp(type, "Yes") == 0 || strcmp(type, "yes") == 0 || strcmp(type, "Y") == 0 || strcmp(type, "y") == 0) {
+        HomeScreen();
+    }
+    else if (strcmp(type, "No") == 0 || strcmp(type, "no") == 0 || strcmp(type, "N") == 0 || strcmp(type, "n") == 0) {
+        printf("\nAlright, thank you for playing the game!\n");
+    }
+    else {
+        printf("\nWhat was that? Please type 'yes' or 'no' only.\n");
+        PlayAgain();
+    }
+}
+
+void UpdateEffectDuration(int playerIndex) {
+    if (player[playerIndex].effect_duration > 0) {
+        
+        if (strcmp(player[playerIndex].effect, "Bleeding") == 0) {
+            player[playerIndex].health -= 10;
+            printf("\n%s is taking 10 damage due to bleeding from Magnificent Slice.\n", player[playerIndex].character);
+            printf("%s (Player %d) has %d health left.\n", player[playerIndex].character, playerIndex + 1, player[playerIndex].health);
+        }
+        
+        player[playerIndex].effect_duration--;
+    
+        if (player[playerIndex].effect_duration == 0) {
+            if (strcmp(player[playerIndex].effect, "One Round Bonus Armor") == 0) {
+                player[playerIndex].armor -= 25;
+                printf("\n%s's Divine Shield has been deactivated.\n%s lost 25 armor.\n", player[playerIndex].character, player[playerIndex].character);
+            }
+            if (strcmp(player[playerIndex].effect, "Bleeding") == 0) {
+                printf("\n%s's bleeding stopped.\n", player[playerIndex].character);
+            }
+
+            // clear the effect
+            strcpy(player[playerIndex].effect, "");
+        }
+    }
+}
+
+void HomeScreen() {
+    printf("Welcome to the Home Screen!\n");
+    // Add additional HomeScreen implementation here
+}
+
