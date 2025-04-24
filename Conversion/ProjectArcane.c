@@ -114,7 +114,7 @@ void MenuScreen(){
     }
 
     else if (strcmp(choice, "3") == 0 || strcmp(choice, "guide") == 0){
-        //GuideMenu();
+        GuideMenu();
     }
 
     else{
@@ -227,5 +227,32 @@ bool CharacterAssign(int playerIndex) {
     }
     else {
         return false;
+    }
+}
+
+void GuideMenu(){
+    printf("Here are five simple tips to guide you in the game: \n" );
+    printf("1. Understand each character in the game. Each have unique attributes and abilities. \n");
+    printf("2. To acquire mana, use basic attack. A basic attack gains a player 10 mana. \n");
+    printf("3. Check status every once in a while to keep an eye on your health and attributes. \n");
+    printf("4. This is a turn-based strategy game. Make sure to think of your next move. \n");
+    printf("5. Master the effects: \n");
+    printf("  - Critical hits can turn the battle in your favor. \n");
+    printf("  - Understand how effects like bleeding or stun impact the opponent over multiple turns. \n");
+    printf("6. Enjoy the game. \n" );
+
+    char choice[4];
+    printf("Type 'menu' to return: \n");
+    scanf("%s", &choice);
+
+    system("cls");
+    
+    if (strcmp(choice, "menu") == 0) {
+        MenuScreen();
+    }
+
+    else {
+        printf("Invalid input. Please try again. \n");
+        GuideMenu();
     }
 }

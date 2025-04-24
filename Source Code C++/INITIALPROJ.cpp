@@ -36,7 +36,7 @@ int DamageCalculation(int attacking_player, int target_player);
 bool CastingAbilities(int attacking_player, int target_player, int playerTurns);
 void UpdateEffectDuration(int playerIndex);
 void PlayAgain();
-
+//Main Done
 int main (){
 
     system("cls");
@@ -47,7 +47,7 @@ int main (){
    
     return 0;
 }
-
+//Homescreen Done
 void HomeScreen() {
 
     string start;
@@ -89,7 +89,7 @@ void HomeScreen() {
         HomeScreen();
     }
 }
-
+//MenuScreen Done
 void MenuScreen(){
     string choice;
     cout << endl << "Menu: " << endl << "1. Play" << endl << "2. Characters Preview" << endl << "3. Guide" << endl << endl<< "Choice: ";
@@ -200,7 +200,7 @@ void CharactersPreview(){
         CharactersPreview();
     }
 }
-
+//Guide Menu Done
 void GuideMenu(){
     cout << "Here are five simple tips to guide you in the game: " << endl << endl;
     cout << "1. Understand each character in the game. Each have unique attributes and abilities." << endl;
@@ -227,7 +227,7 @@ void GuideMenu(){
         GuideMenu();
     }
 }
-
+//Character Pick Done
 void CharacterPick(){
 
     for (int playerIndex = 1; playerIndex < PLAYERS + 1; playerIndex++){
@@ -262,7 +262,7 @@ void CharacterPick(){
     GameProper();
 
 }
-
+//Character Assign Done
 bool CharacterAssign(int playerIndex){
 
     if (player[playerIndex - 1].character == "1" || player[playerIndex - 1].character == "thorin"){
@@ -343,7 +343,6 @@ bool CharacterAssign(int playerIndex){
         return false;
     }
 }
-
 
 void GameProper(){
    
@@ -501,7 +500,6 @@ int DamageCalculation(int attacking_player, int target_player){
     // if there's no armor/crit, no mitigation/crit attack, therefore, original damage
     return originalDamage;
 }
-
 
 bool CastingAbilities(int attacking_player, int target_player, int playerTurns){
 
@@ -930,7 +928,6 @@ bool CastingAbilities(int attacking_player, int target_player, int playerTurns){
     return false;
 }
 
-
 void UpdateEffectDuration(int playerIndex){
     if (player[playerIndex].effect_duration > 0){
 
@@ -960,8 +957,6 @@ void UpdateEffectDuration(int playerIndex){
         }
     }
 }
-
-
 
 void PlayAgain(){
 
