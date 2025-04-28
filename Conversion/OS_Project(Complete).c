@@ -174,42 +174,41 @@ void GuideMenu() {
     }
 }
 
-void CharacterPick() {
-    int playerIndex;
-    for (playerIndex = 0; playerIndex < PLAYERS; playerIndex++) {
-        int validSelection = 0;
+void CharacterPick(){
+    for (int playerIndex = 1; playerIndex < PLAYERS + 1; playerIndex++){
 
-        while (!validSelection) {
-            printf("\nChoose character for Player %d:\n", playerIndex + 1);
-            printf("1. Thorin: Holy Paladin\n");
-            printf("2. Daxton: Wild Juggernaut\n");
-            printf("3. Joji: Jujutsu Sorcerer\n");
-            printf("4. Walter: Lavish Swordsman\n");
-            printf("5. Lilith: Mystic Siphoner\n");
-            printf("\nWho's your character: ");
-            if (scanf("%19s", player[playerIndex].character) != 1) {
-                printf("Invalid input.\n");
-                return;
-            }
+        bool validSelection = false;
 
+        while (!validSelection){
+
+            printf("Choose character for Player %d: \n",playerIndex);
+            printf("1. Thorin: Holy Paladin \n");
+            printf("2. Daxton: Wild Juggernaut \n");
+            printf("3. Joji: Jujutsu Sorcerer \n");
+            printf("4. Walter: Lavish Swordsman \n");
+            printf("5. Lilith: Mystic Siphoner \n");
+            printf("Who's your character: \n");
+            scanf("%s", player[playerIndex - 1].character);
+            
             validSelection = CharacterAssign(playerIndex);
 
             if (!validSelection) {
-                printf("Invalid selection. Try again.\n");
+                printf("Invalid selection. Try again. n");
+
             }
         }
     }
+    printf("\nPlayer 1: %s\n", player[PLAYER_ONE].character);
+    printf("Player 2: %s\n", player[PLAYER_TWO].character);
 
-    clearScreen();
-    printf("\nIt's time for %s vs. %s!\n", player[PLAYER_ONE].character, player[PLAYER_TWO].character);
-    printf("Now, let the fight begin!\n");
-
+    printf("\nGame starts now!\n");
     GameProper();
 }
 
 bool CharacterAssign(int playerIndex) {
 
-    if (strcmp(player[playerIndex - 1].character, "1") == 0 || strcmp(player[playerIndex - 1].character, "thorin") == 0) {
+    if (strcmp(player[playerIndex - 1].character, "1") == 0 || 
+        strcmp(player[playerIndex - 1].character, "thorin") == 0) {
         strcpy(player[playerIndex - 1].character, "Thorin");
         player[playerIndex - 1].health = 350;
         player[playerIndex - 1].mana = 0;
@@ -222,7 +221,8 @@ bool CharacterAssign(int playerIndex) {
         printf("%s is selected.\n", player[playerIndex - 1].character);
         return true;
     }
-    else if (strcmp(player[playerIndex - 1].character, "2") == 0 || strcmp(player[playerIndex - 1].character, "daxton") == 0) {
+    else if (strcmp(player[playerIndex - 1].character, "2") == 0 || 
+             strcmp(player[playerIndex - 1].character, "daxton") == 0) {
         strcpy(player[playerIndex - 1].character, "Daxton");
         player[playerIndex - 1].health = 400;
         player[playerIndex - 1].mana = 0;
@@ -235,7 +235,8 @@ bool CharacterAssign(int playerIndex) {
         printf("%s is selected.\n", player[playerIndex - 1].character);
         return true;
     }
-    else if (strcmp(player[playerIndex - 1].character, "3") == 0 || strcmp(player[playerIndex - 1].character, "joji") == 0) {
+    else if (strcmp(player[playerIndex - 1].character, "3") == 0 || 
+             strcmp(player[playerIndex - 1].character, "joji") == 0) {
         strcpy(player[playerIndex - 1].character, "Joji");
         player[playerIndex - 1].health = 300;
         player[playerIndex - 1].mana = 0;
@@ -248,7 +249,8 @@ bool CharacterAssign(int playerIndex) {
         printf("%s is selected.\n", player[playerIndex - 1].character);
         return true;
     }
-    else if (strcmp(player[playerIndex - 1].character, "4") == 0 || strcmp(player[playerIndex - 1].character, "walter") == 0) {
+    else if (strcmp(player[playerIndex - 1].character, "4") == 0 || 
+             strcmp(player[playerIndex - 1].character, "walter") == 0) {
         strcpy(player[playerIndex - 1].character, "Walter");
         player[playerIndex - 1].health = 300;
         player[playerIndex - 1].mana = 0;
@@ -261,7 +263,8 @@ bool CharacterAssign(int playerIndex) {
         printf("%s is selected.\n", player[playerIndex - 1].character);
         return true;
     }
-    else if (strcmp(player[playerIndex - 1].character, "5") == 0 || strcmp(player[playerIndex - 1].character, "lilith") == 0) {
+    else if (strcmp(player[playerIndex - 1].character, "5") == 0 || 
+             strcmp(player[playerIndex - 1].character, "lilith") == 0) {
         strcpy(player[playerIndex - 1].character, "Lilith");
         player[playerIndex - 1].health = 300;
         player[playerIndex - 1].mana = 0;
@@ -275,7 +278,7 @@ bool CharacterAssign(int playerIndex) {
         return true;
     }
     else {
-        return false; 
+        return false;
     }
 }
 
