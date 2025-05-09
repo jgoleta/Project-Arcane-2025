@@ -242,6 +242,14 @@ void send_message(int sock, const char *message) {
     }
 }
 
+int get_character_index(Character *ch) {
+    for (int i = 0; i < 5; i++) {
+        if (strcmp(ch->name, characters[i].name) == 0)
+            return i;
+    }
+    return -1; // not found
+}
+
 
 void receive_message(int sock, char *buffer) {
     bzero(buffer, MAX_BUFFER);
@@ -250,6 +258,7 @@ void receive_message(int sock, char *buffer) {
         die_with_error("Error: recv() message failed.");
     }
     buffer[n] = '\0'; // null terminate
+    
 }
 
 
@@ -257,6 +266,7 @@ int main(int argc, char *argv[]) {
     int client_sock, port_no;
     struct sockaddr_in server_addr;
     struct hostent *server;
+    
 
     char buffer[MAX_BUFFER];
 
@@ -316,8 +326,10 @@ int main(int argc, char *argv[]) {
     send_character(client_sock, &player);
     // Receive opponent character from server
     receive_character(client_sock, &opponent);
+    
     printf("\nYou are playing as %s\n", player.name);
     printf("Your opponent is %s\n\n", opponent.name);
+    
 
     // Game loop
     int turn = 1; // 0 = server's turn, 1 = client's turn
@@ -447,13 +459,12 @@ int main(int argc, char *argv[]) {
         "        `-''            ``--' \n"
     );
 }
-            printf("Your HP: %d/%d, Mana: %d/%d", player.health, player.max_health, player.mana, player.max_mana);
+            printf("\nYour HP: %d/%d, Mana: %d/%d", player.health, player.max_health, player.mana, player.max_mana);
             printf("                 Opponent HP: %d/%d\n", opponent.health, opponent.max_health);
-            
-            printf("Choose action:\n");
-            printf("1. Basic Attack\n");
-            printf("2. Use Ability\n");
-            printf("3. Skip Turn (Regenerate 5 Mana)\n");
+            printf("#########################################################################\n");
+            printf("# Choose action:");
+            printf("            # 1. Basic Attack            2. Use Ability #\n");
+            printf("#                           # 3. Skip Turn (Regenerate 5 Mana)          #\n");                 printf("#########################################################################\n");         
             printf("Enter choice: ");
             
             int action;
