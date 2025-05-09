@@ -295,6 +295,30 @@ int main() {
     receive_character(client_socket, &opponent);
     
     printf("\nYou are playing as %s\n", player.name);
+    if (strcmp(opponent.name, "Thorin: Holy Paladin") == 1) {
+    printf( 
+        "  ,   A           {}\n"
+        " / \\, | ,        .--.\n"
+        "|    =|= >      /.--.\\\n"
+        " \\ /` | `       |====|\n"
+        "  `   |         |`::`|  \n"
+        "      |     .-;`\\..../`;_.-^-._\n"
+        "     /\\\\/  /  |...::..|`   :   `|\n"
+        "     |:'\\ |   /'''::''|   .:.   |\n"
+        "      \\ /\\;-,/\\   ::  |..:::::..|\n"
+        "      |\\ <` >  >._::_.| ':::::' |\n"
+        "      | `\"\"`  /   ^^  |   ':'   |\n"
+        "      |       |       \\    :    /\n"
+        "      |       |        \\   :   / \n"
+        "      |       |___/\\___|`-.:.-`\n"
+        "      |        \\_ || _/    `\n"
+        "      |        <_ >< _>\n"
+        "      |        |  ||  |\n"
+        "      |        |  ||  |\n"
+        "      |       _\\.:||:./_\n"
+        "      | jgs  /____/\\____\\\n"
+    );
+}
     printf("Your opponent is %s\n\n", opponent.name);
     
     // Game loop
@@ -427,13 +451,13 @@ int main() {
         "        `-''            ``--' \n"
     );
 }
-            printf("Your HP: %d/%d, Mana: %d/%d", player.health, player.max_health, player.mana, player.max_mana);
+            printf("\nYour HP: %d/%d, Mana: %d/%d", player.health, player.max_health, player.mana, player.max_mana);
             printf("                 Opponent HP: %d/%d\n", opponent.health, opponent.max_health);
-            
-            printf("Choose action:\n");
-            printf("1. Basic Attack\n");
-            printf("2. Use Ability\n");
-            printf("3. Skip Turn (Regenerate 5 Mana)\n");
+printf("#########################################################################\n");
+            printf("# Choose action:");
+            printf("            # 1. Basic Attack            2. Use Ability #\n");
+            printf("#                           # 3. Skip Turn (Regenerate 5 Mana)          #\n");
+printf("#########################################################################\n");
             printf("Enter choice: ");
             
             int action;
