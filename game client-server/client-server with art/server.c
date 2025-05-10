@@ -195,6 +195,48 @@ if (i + 1 == 5) {
     }
 }
 
+
+void MenuScreen() {
+    void GuideMenu() {
+    printf("Here are five simple tips to guide you in the game:\n\n");
+    printf("1. Understand each character in the game. Each have unique attributes and abilities.\n");
+    printf("2. To acquire mana, use basic attack. A basic attack gains a player 10 mana.\n");
+    printf("3. Check status every once in a while to keep an eye on your health and attributes.\n");
+    printf("4. This is a turn-based strategy game. Make sure to think of your next move.\n");
+    printf("5. Master the effects:\n");
+    printf("  - Critical hits can turn the battle in your favor.\n");
+    printf("  - Understand how effects like bleeding or stun impact the opponent over multiple turns.\n");
+    printf("6. Enjoy the game.\n");
+
+    char choice[MAX_STRING];
+    printf("\nType 'menu' to return: ");
+    scanf("%s", choice);
+    
+    if (strcmp(choice, "menu") == 0) {
+        MenuScreen();
+    }
+    else {
+        printf("Invalid input. Please try again.\n");
+        GuideMenu();
+    }
+}
+    char option[MAX_STRING];
+    printf("\nMenu:\n1. Play\n2. Guide\n\nChoice: ");
+    scanf("%s", option);
+
+    if (strcmp(option, "1") == 0 || strcmp(option, "play") == 0) {
+        display_characters();
+    }
+    else if (strcmp(option, "2") == 0 || strcmp(option, "guide") == 0) {
+        GuideMenu();
+    }
+    else {
+        printf("Invalid choice. Please select from the choices only (1-3).\n");
+        MenuScreen();
+    }
+}
+
+
 void HomeScreen() {
     char start[MAX_STRING];
     printf( //off formatting sa code pero oks pag compiled
@@ -225,7 +267,7 @@ void HomeScreen() {
 
     if (strcmp(start, "start") == 0 || strcmp(start, "START") == 0 || strcmp(start, "Start") == 0) {
         printf("\n");
-        display_characters();
+        MenuScreen();
         }
 }
 
@@ -529,10 +571,10 @@ int main() {
 }
 if (strcmp(opponent.name, "Joji: Jujutsu Sorcerer") == 0) {
     printf( 
-        "###########################                                  _,-'|\n"
-        "# Joji: Jujutsu Sorcerer  #                               ,-'._  |\n"
-        "# Opponent HP: %d/%d    #                       .||,      |####\\ |\n"
-        "###########################                     \\.',/     \\####| |\n"
+        "###########################                                   _,-'|\n"
+        "# Joji: Jujutsu Sorcerer  #                                ,-'._  |\n"
+        "# Opponent HP: %d/%d    #                      .||,      |####\\ |\n"
+        "###########################                     \\.`',/     \\####| |\n"
         "                                                = ,. =      |###| |\n"
         "                                                / || \\    ,-\\#/,'.\n"
         "                                                  ||     ,'   ,,. .\n"
