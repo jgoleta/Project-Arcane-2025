@@ -602,7 +602,7 @@ if (strcmp(opponent.name, "Lilith: Mystic Siphoner") == 0) {
             else if (action == 2) {
                 // Use ability
                 printf("Choose ability:\n");
-                for (int i = 0; i < 3; i++) {
+                for (int i = 0; i < 2; i++) {
                     printf("%d. %s (Damage: %d, Mana Cost: %d)\n", 
                            i+1, player.abilities[i], player.ability_damage[i], player.ability_mana_cost[i]);
                 }
