@@ -7,6 +7,7 @@
 
 #define PORT 8080
 #define MAX_BUFFER 1024
+#define MAX_STRING 100
 
 typedef struct {
     char name[50];
@@ -46,12 +47,13 @@ Character characters[5] = {
     }
 };
 
+
 void display_characters() {
     printf(  
 "   ___ _                       _  _           \n"
 "  / __| |_  ___  ___ ___ ___  | || |___ _ _ ___  \n"
 " | (__| ' \\/ _ \\/ _ (_-</ -_) | __ / -_) '_/ _ \\ \n"
-"  \\___|_||_\\___/\\___/__/\\___| |_||_\\___|_| \\___/ "
+"  \\___|_||_\\___/\\___/__/\\___| |_||_\\___|_| \\___/ \n\n"
                                                 );
     for (int i = 0; i < 5; i++) {
         printf("%d. %s\n", i + 1, characters[i].name);
@@ -191,6 +193,40 @@ if (i + 1 == 5) {
         }
         printf("\n");
     }
+}
+
+void HomeScreen() {
+    char start[MAX_STRING];
+    printf( //off formatting sa code pero oks pag compiled
+        "  _______                                                     __           \n"
+        " |       \\                                                   |  \\        \n"
+        " | $$$$$$$\\  ______    ______       __   ______    _______  _| $$_        \n"
+        " | $$__/ $$ /      \\  /      \\     |  \\ /      \\  /       \\|   $$ \\  \n"
+        " | $$    $$| $$$$$$ \\| $$$$$$ \\    | $$| $$$$$$ \\ |$$$$$$$ \\$$$$$$     \n"
+        " | $$$$$$$ | $$   \\$$| $$  | $$    | &&| $$    $$ |$$        | $$ __      \n"
+        " | $$      | $$      | $$__/ $$    | $$| $$$$$$$$ |$$_____   | $$|  \\     \n"
+        " | $$      | $$       \\$$    $$    | $$ \\$$     \\ \\$$     \\   \\$$  $$\n"
+        "  \\$$       \\$$        \\$$$$$$__   | $$  \\$$$$$$$  \\$$$$$$$    \\$$$$ \n"
+        "                             |  \\__/ $$                                   \n"
+        "                             \\$$    $$                                    \n"
+        "                              \\$$$$$$                                     \n"
+        "  ______                                                                   \n"
+        " /      \\                                                                 \n"
+        "|  $$$$$$\\  ______    _______  ______   _______    ______                 \n"
+        "| $$__| $$ /      \\  /       \\|      \\ |       \\  /      \\            \n"
+        "| $$    $$|  $$$$$$\\|  $$$$$$$ \\$$$$$$\\| $$$$$$$\\|  $$$$$$\\           \n"
+        "| $$$$$$$$| $$   \\$$| $$      /      $$| $$  | $$| $$    $$               \n"
+        "| $$  | $$| $$      | $$_____|  $$$$$$$| $$  | $$| $$$$$$$$                \n"
+        "| $$  | $$| $$       \\$$     \\\\$$    $$| $$  | $$ \\$$     \\           \n"
+        " \\$$   \\$$ \\$$        \\$$$$$$$ \\$$$$$$$ \\$$   \\$$  \\$$$$$$$        \n"
+    );
+    printf("\nWELCOME TO PROJECT ARCANE\nA 1v1 Turn-Based Game\n\n");
+    scanf("%s", start);
+
+    if (strcmp(start, "start") == 0 || strcmp(start, "START") == 0 || strcmp(start, "Start") == 0) {
+        printf("\n");
+        display_characters();
+        }
 }
 
 int calculate_damage(int damage, int armor, float crit_chance) {
@@ -398,8 +434,7 @@ int main() {
     
     // Character select
     Character player, opponent;
-    
-    display_characters();
+    HomeScreen();
     printf("Choose your character (1-5): ");
     int choice;
     scanf("%d", &choice);
@@ -599,7 +634,7 @@ if (strcmp(opponent.name, "Lilith: Mystic Siphoner") == 0) {
             else if (action == 2) {
                 // Use ability
                 printf("Choose ability:\n");
-                for (int i = 0; i < 3; i++) {
+                for (int i = 0; i < 2; i++) {
                     printf("%d. %s (Damage: %d, Mana Cost: %d)\n", 
                            i+1, player.abilities[i], player.ability_damage[i], player.ability_mana_cost[i]);
                 }
