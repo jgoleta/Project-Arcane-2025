@@ -496,10 +496,10 @@ int main(int argc, char *argv[]) {
 }
 if (strcmp(opponent.name, "Joji: Jujutsu Sorcerer") == 0) {
     printf( 
-        "###########################                                  _,-'|\n"
-        "# Joji: Jujutsu Sorcerer  #                               ,-'._  |\n"
-        "# Opponent HP: %d/%d    #                       .||,      |####\\ |\n"
-        "###########################                     \\.',/     \\####| |\n"
+        "###########################                                   _,-'|\n"
+        "# Joji: Jujutsu Sorcerer  #                                ,-'._  |\n"
+        "# Opponent HP: %d/%d    #                      .||,      |####\\ |\n"
+        "###########################                     \\.`',/     \\####| |\n"
         "                                                = ,. =      |###| |\n"
         "                                                / || \\    ,-\\#/,'.\n"
         "                                                  ||     ,'   ,,. .\n"
