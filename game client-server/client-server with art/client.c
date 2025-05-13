@@ -8,6 +8,7 @@
 #include <netdb.h>
 #include <unistd.h>
 #include <time.h>
+#include <ctype.h>
 
 #define MAX_STRING 100
 #define MAX_BUFFER 1024
@@ -33,13 +34,13 @@ Character characters[5] = {
         {"Divne Slash", "A Strike From Above"},
         /*skill damage*/{20, 45}, /*mana cost*/{35, 75}  
     },
-    {"Daxton: Wild Juggernaut",300, 300, 10, 65, 20, 85, 35, 0.25, 
+    {"Daxton: Wild Juggernaut",300, 300, 10, 65, 20, 85, 10, 0.25, 
         {"Headbutt", "A Juggernaut's Last Stand"},
         {10, 40},{20, 50}
     },
     {"Joji: Jujutsu Sorcerer",250, 250, 30, 120, 30, 50, 7, 0.35, 
         {"Black Flash", "Domain Expansion"},
-        {40, 60},{25, 90}
+        {37, 60},{25, 90}
     },
     {"Walter: Lavish Swordsman",190, 190, 20, 50, 35, 85, 2, 0.10, 
         {"Magnificent Slash", "My Final Ecstasy"},
@@ -363,6 +364,11 @@ void MenuScreen() {
     }
 }
 
+void to_lowercase(char *str) {
+    for (int i = 0; str[i]; i++) {
+        str[i] = tolower(str[i]);
+    }
+}
 
 void HomeScreen() {
     char start[MAX_STRING];
@@ -390,9 +396,12 @@ void HomeScreen() {
         " \\$$   \\$$ \\$$        \\$$$$$$$ \\$$$$$$$ \\$$   \\$$  \\$$$$$$$        \n"
     );
     printf("\nWELCOME TO PROJECT ARCANE\nA 1v1 Turn-Based Game\n\n");
+    printf("\nType Start to play\n");
     scanf("%s", start);
 
-    if (strcmp(start, "start") == 0 || strcmp(start, "START") == 0 || strcmp(start, "Start") == 0) {
+    to_lowercase(start);
+
+    if (strcmp(start, "start") == 0) {
         printf("\n");
         MenuScreen();
         }
@@ -430,14 +439,6 @@ void send_message(int sock, const char *message) {
     }
 }
 
-int get_character_index(Character *ch) {
-    for (int i = 0; i < 5; i++) {
-        if (strcmp(ch->name, characters[i].name) == 0)
-            return i;
-    }
-    return -1; // not found
-}
-
 
 void receive_message(int sock, char *buffer) {
     bzero(buffer, MAX_BUFFER);
@@ -450,6 +451,8 @@ void receive_message(int sock, char *buffer) {
 
 
 int main(int argc, char *argv[]) {
+    srand(time(NULL));
+
     int client_sock, port_no;
     struct sockaddr_in server_addr;
     struct hostent *server;
@@ -665,6 +668,7 @@ if (strcmp(opponent.name, "Lilith: Mystic Siphoner") == 0) {
             if (action == 1) {
                 // Basic attack
                 int damage = player.basic_attack_min + rand() % (player.basic_attack_max - player.basic_attack_min + 1);
+                //printf("Raw damage calculated: %d\n", damage); //debugger
                 int final_damage = calculate_damage(damage, opponent.armor, player.crit_chance);
                 opponent.health -= final_damage;
                 player.mana += 5; // Mana regeneration

@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include <arpa/inet.h>
 #include <time.h>
+#include <ctype.h>
 
 #define MAX_BUFFER 1024
 #define MAX_STRING 100
@@ -29,13 +30,13 @@ Character characters[5] = {
         {"Divne Slash", "A Strike From Above"},
         /*skill damage*/{20, 45}, /*mana cost*/{35, 75}  
     },
-    {"Daxton: Wild Juggernaut",300, 300, 10, 65, 20, 85, 35, 0.25, 
+    {"Daxton: Wild Juggernaut",300, 300, 10, 65, 20, 85, 10, 0.25, 
         {"Headbutt", "A Juggernaut's Last Stand"},
         {10, 40},{20, 50}
     },
     {"Joji: Jujutsu Sorcerer",250, 250, 30, 120, 30, 50, 7, 0.35, 
         {"Black Flash", "Domain Expansion"},
-        {40, 60},{25, 90}
+        {37, 60},{25, 90}
     },
     {"Walter: Lavish Swordsman",190, 190, 20, 50, 35, 85, 2, 0.10, 
         {"Magnificent Slash", "My Final Ecstasy"},
@@ -240,10 +241,15 @@ void MenuScreen() {
     }
 }
 
+void to_lowercase(char *str) {
+    for (int i = 0; str[i]; i++) {
+        str[i] = tolower(str[i]);
+    }
+}
 
 void HomeScreen() {
     char start[MAX_STRING];
-    printf( //off formatting sa code pero oks pag compiled
+    printf( 
         "  _______                                                     __           \n"
         " |       \\                                                   |  \\        \n"
         " | $$$$$$$\\  ______    ______       __   ______    _______  _| $$_        \n"
@@ -267,9 +273,12 @@ void HomeScreen() {
         " \\$$   \\$$ \\$$        \\$$$$$$$ \\$$$$$$$ \\$$   \\$$  \\$$$$$$$        \n"
     );
     printf("\nWELCOME TO PROJECT ARCANE\nA 1v1 Turn-Based Game\n\n");
+    printf("\nType Start to play\n");
     scanf("%s", start);
 
-    if (strcmp(start, "start") == 0 || strcmp(start, "START") == 0 || strcmp(start, "Start") == 0) {
+    to_lowercase(start);
+
+    if (strcmp(start, "start") == 0) {
         printf("\n");
         MenuScreen();
         }
@@ -438,7 +447,7 @@ void displayCharacterArt(int choice) {
 
 
 int main(int argc, char *argv[]) {
-    srand(time(0));
+    srand(time(NULL));
     
     if (argc < 2) {
         fprintf(stderr, "Usage: %s <port_number>\n", argv[0]);
@@ -460,11 +469,12 @@ int main(int argc, char *argv[]) {
         perror("socket failed");
         exit(EXIT_FAILURE);
     }
-    
+    /*
     if (setsockopt(server_fd, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &opt, sizeof(opt))) {
         perror("setsockopt");
         exit(EXIT_FAILURE);
     }
+    */
     
     address.sin_family = AF_INET;
     address.sin_addr.s_addr = INADDR_ANY;
