@@ -5,7 +5,6 @@
 #include <arpa/inet.h>
 #include <time.h>
 
-#define PORT 8080
 #define MAX_BUFFER 1024
 #define MAX_STRING 100
 
@@ -48,6 +47,10 @@ Character characters[5] = {
     }
 };
 
+void die_with_error(char *error_msg) {
+    perror(error_msg);
+    exit(EXIT_FAILURE);
+}
 
 void display_characters() {
     printf(  
@@ -298,7 +301,12 @@ void send_message(int client_socket, const char *message) {
 }
 
 void receive_message(int client_socket, char *buffer) {
-    recv(client_socket, buffer, MAX_BUFFER, 0);
+    bzero(buffer, MAX_BUFFER);
+    int n = recv(client_socket, buffer, MAX_BUFFER - 1, 0);
+    if (n < 0) {
+        die_with_error("Error: recv() message failed.");
+    }
+    buffer[n] = '\0'; // null terminate
 }
 
 void displayCharacterArt(int choice) {
@@ -432,18 +440,27 @@ void displayCharacterArt(int choice) {
 int main(int argc, char *argv[]) {
     srand(time(0));
     
+    if (argc < 2) {
+        fprintf(stderr, "Usage: %s <port_number>\n", argv[0]);
+        exit(EXIT_FAILURE);
+    }
+
+    int port = atoi(argv[1]);
+    if (port < 1024 || port > 65535) {
+        fprintf(stderr, "Invalid port number. Use a port between 1024 and 65535.\n");
+        exit(EXIT_FAILURE);
+    }
+    
     int server_fd, client_socket;
     struct sockaddr_in address;
     int opt = 1;
     int addrlen = sizeof(address);
     
-    // Create socket
     if ((server_fd = socket(AF_INET, SOCK_STREAM, 0)) == 0) {
         perror("socket failed");
         exit(EXIT_FAILURE);
     }
     
-    // Set socket options
     if (setsockopt(server_fd, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &opt, sizeof(opt))) {
         perror("setsockopt");
         exit(EXIT_FAILURE);
@@ -451,24 +468,21 @@ int main(int argc, char *argv[]) {
     
     address.sin_family = AF_INET;
     address.sin_addr.s_addr = INADDR_ANY;
-    address.sin_port = htons(PORT);
+    address.sin_port = htons(port);
     
-    // Bind socket
     if (bind(server_fd, (struct sockaddr *)&address, sizeof(address)) < 0) {
         perror("bind failed");
         exit(EXIT_FAILURE);
     }
     
-    // Listen for connections
     if (listen(server_fd, 3) < 0) {
         perror("listen");
         exit(EXIT_FAILURE);
     }
     
-    printf("Waiting for client to connect...\n");
+    printf("Waiting for client to connect on port %d...\n", port);
     
-    // Accept connection
-    if ((client_socket = accept(server_fd, (struct sockaddr *)&address, &addrlen)) < 0) {
+    if ((client_socket = accept(server_fd, (struct sockaddr *)&address, (socklen_t*)&addrlen)) < 0) {
         perror("accept");
         exit(EXIT_FAILURE);
     }
@@ -731,7 +745,7 @@ if (strcmp(opponent.name, "Lilith: Mystic Siphoner") == 0) {
             }
             
             turn = 1; // Switch to client's turn
-        } else {
+        } else if(turn == 1) {
             // Client's turn
             printf("\nWaiting for opponent's move...\n");
             receive_message(client_socket, buffer);

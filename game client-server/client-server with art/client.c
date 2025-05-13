@@ -9,7 +9,7 @@
 #include <unistd.h>
 #include <time.h>
 
-
+#define MAX_STRING 100
 #define MAX_BUFFER 1024
 typedef struct {
     char name[50];
@@ -323,6 +323,81 @@ void displayCharacterArt(int choice) {
     }
 }
 
+void MenuScreen() {
+    void GuideMenu() {
+    printf("Here are five simple tips to guide you in the game:\n\n");
+    printf("1. Understand each character in the game. Each have unique attributes and abilities.\n");
+    printf("2. To acquire mana, use basic attack. A basic attack gains a player 10 mana.\n");
+    printf("3. Check status every once in a while to keep an eye on your health and attributes.\n");
+    printf("4. This is a turn-based strategy game. Make sure to think of your next move.\n");
+    printf("5. Master the effects:\n");
+    printf("  - Critical hits can turn the battle in your favor.\n");
+    printf("  - Understand how effects like bleeding or stun impact the opponent over multiple turns.\n");
+    printf("6. Enjoy the game.\n");
+
+    char choice[MAX_STRING];
+    printf("\nType 'menu' to return: ");
+    scanf("%s", choice);
+    
+    if (strcmp(choice, "menu") == 0) {
+        MenuScreen();
+    }
+    else {
+        printf("Invalid input. Please try again.\n");
+        GuideMenu();
+    }
+}
+    char option[MAX_STRING];
+    printf("\nMenu:\n1. Play\n2. Guide\n\nChoice: ");
+    scanf("%s", option);
+
+    if (strcmp(option, "1") == 0 || strcmp(option, "play") == 0) {
+        display_characters();
+    }
+    else if (strcmp(option, "2") == 0 || strcmp(option, "guide") == 0) {
+        GuideMenu();
+    }
+    else {
+        printf("Invalid choice. Please select from the choices only (1-3).\n");
+        MenuScreen();
+    }
+}
+
+
+void HomeScreen() {
+    char start[MAX_STRING];
+    printf( //off formatting sa code pero oks pag compiled
+        "  _______                                                     __           \n"
+        " |       \\                                                   |  \\        \n"
+        " | $$$$$$$\\  ______    ______       __   ______    _______  _| $$_        \n"
+        " | $$__/ $$ /      \\  /      \\     |  \\ /      \\  /       \\|   $$ \\  \n"
+        " | $$    $$| $$$$$$ \\| $$$$$$ \\    | $$| $$$$$$ \\ |$$$$$$$ \\$$$$$$     \n"
+        " | $$$$$$$ | $$   \\$$| $$  | $$    | &&| $$    $$ |$$        | $$ __      \n"
+        " | $$      | $$      | $$__/ $$    | $$| $$$$$$$$ |$$_____   | $$|  \\     \n"
+        " | $$      | $$       \\$$    $$    | $$ \\$$     \\ \\$$     \\   \\$$  $$\n"
+        "  \\$$       \\$$        \\$$$$$$__   | $$  \\$$$$$$$  \\$$$$$$$    \\$$$$ \n"
+        "                             |  \\__/ $$                                   \n"
+        "                             \\$$    $$                                    \n"
+        "                              \\$$$$$$                                     \n"
+        "  ______                                                                   \n"
+        " /      \\                                                                 \n"
+        "|  $$$$$$\\  ______    _______  ______   _______    ______                 \n"
+        "| $$__| $$ /      \\  /       \\|      \\ |       \\  /      \\            \n"
+        "| $$    $$|  $$$$$$\\|  $$$$$$$ \\$$$$$$\\| $$$$$$$\\|  $$$$$$\\           \n"
+        "| $$$$$$$$| $$   \\$$| $$      /      $$| $$  | $$| $$    $$               \n"
+        "| $$  | $$| $$      | $$_____|  $$$$$$$| $$  | $$| $$$$$$$$                \n"
+        "| $$  | $$| $$       \\$$     \\\\$$    $$| $$  | $$ \\$$     \\           \n"
+        " \\$$   \\$$ \\$$        \\$$$$$$$ \\$$$$$$$ \\$$   \\$$  \\$$$$$$$        \n"
+    );
+    printf("\nWELCOME TO PROJECT ARCANE\nA 1v1 Turn-Based Game\n\n");
+    scanf("%s", start);
+
+    if (strcmp(start, "start") == 0 || strcmp(start, "START") == 0 || strcmp(start, "Start") == 0) {
+        printf("\n");
+        MenuScreen();
+        }
+}
+
 int calculate_damage(int damage, int armor, float crit_chance) {
     float crit_roll = (float)rand() / RAND_MAX;
     if (crit_roll <= crit_chance) {
@@ -371,7 +446,6 @@ void receive_message(int sock, char *buffer) {
         die_with_error("Error: recv() message failed.");
     }
     buffer[n] = '\0'; // null terminate
-    
 }
 
 
@@ -424,7 +498,7 @@ int main(int argc, char *argv[]) {
     printf("Connected to server!\n\n");
     // Character selection phase
     Character player, opponent;
-    display_characters();
+    HomeScreen();
     printf("Choose your character (1-5): ");
     int choice;
     scanf("%d", &choice);
