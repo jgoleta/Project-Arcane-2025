@@ -22,31 +22,32 @@ typedef struct {
     int armor;
     float crit_chance;
     char abilities[3][50];
-    int ability_damage[3];
-    int ability_mana_cost[3];
+    int ability_damage[2];
+    int ability_mana_cost[2];
 
 } Character;
 
 Character characters[5] = {
-    {"Thorin: Holy Paladin",350, 350, 100, 100, 25, 25, 5, 0.20, //name,hp,maxhp,mana,maxmana,inda
-        {"Divine Shield", "A Blessing From Above"},
-        {0, 0}, {20, 50}
+    /*name,hp,maxhp,mana,maxmana,basic attack min, basic attack max, armor, crit*/
+    {"Thorin: Holy Paladin",165, 165, 190, 250, 10, 30, 5, 0.15, 
+        {"Divne Slash", "A Strike From Above"},
+        /*skill damage*/{20, 45}, /*mana cost*/{35, 75}  
     },
-    {"Daxton: Wild Juggernaut",400, 400, 100, 100, 15, 15, 15, 0.20, 
+    {"Daxton: Wild Juggernaut",300, 300, 10, 65, 20, 85, 35, 0.25, 
         {"Headbutt", "A Juggernaut's Last Stand"},
-        {20, 0},{20, 50}
+        {10, 40},{20, 50}
     },
-    {"Joji: Jujutsu Sorcerer",300, 300, 100, 100, 30, 30, 5, 0.25, 
+    {"Joji: Jujutsu Sorcerer",250, 250, 30, 120, 30, 50, 7, 0.35, 
         {"Black Flash", "Domain Expansion"},
-        {41, 20},{20, 50}
+        {40, 60},{25, 90}
     },
-    {"Walter: Lavish Swordsman",300, 300, 100, 100, 35, 35, 2, 0.25, 
+    {"Walter: Lavish Swordsman",190, 190, 20, 50, 35, 85, 2, 0.10, 
         {"Magnificent Slash", "My Final Ecstasy"},
         {45, 75},{20, 50}
     },
-    {"Lilith: Mystic Siphoner",300, 300, 100, 100, 30, 30, 2, 0.20, 
+    {"Lilith: Mystic Siphoner",200, 200, 45, 100, 16, 46, 2, 0.40, 
         {"Essence Theft", "Heartstealer"},
-        {0, 30},{10, 50}
+        {36, 90},{20, 70}
     }
 };
 
@@ -186,7 +187,7 @@ if (i + 1 == 5) {
                characters[i].basic_attack_min, characters[i].basic_attack_max, 
                characters[i].armor, characters[i].crit_chance * 100);
         printf("   Abilities:\n");
-        for (int j = 0; j < 3; j++) {
+        for (int j = 0; j < 2; j++) {
             printf("   - %s (Damage: %d, Mana Cost: %d)\n", 
                    characters[i].abilities[j], characters[i].ability_damage[j], 
                    characters[i].ability_mana_cost[j]);
@@ -401,7 +402,7 @@ int main(int argc, char *argv[]) {
     }
 
 
-    // Resolve hostname
+    // get hostname or ip
     server = gethostbyname(argv[1]);
     if (server == NULL) {
         die_with_error("Error: No such host.");
@@ -414,7 +415,7 @@ int main(int argc, char *argv[]) {
     server_addr.sin_port = htons(port_no);
 
 
-    // Connect to server
+    // will conn to server if cond met
     if (connect(client_sock, (struct sockaddr *)&server_addr, sizeof(server_addr)) < 0) {
         die_with_error("Error: connect() Failed.");
     }
