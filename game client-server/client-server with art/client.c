@@ -449,6 +449,16 @@ void receive_message(int sock, char *buffer) {
     buffer[n] = '\0'; // null terminate
 }
 
+void PlayAgain() {
+    char choice;
+    printf("\nDo you want to play again? (y/n): ");
+    scanf(" %c", &choice);  // Note the space before %c to ignore previous newline
+    if (choice == 'n' || choice == 'N') {
+        printf("Thanks for playing!\n");
+        exit(0); // Exit the program
+    }
+    // If yes, simply return to the calling loop
+}
 
 int main(int argc, char *argv[]) {
     srand(time(NULL));
@@ -499,6 +509,7 @@ int main(int argc, char *argv[]) {
 
 
     printf("Connected to server!\n\n");
+    while (1) {
     // Character selection phase
     Character player, opponent;
     HomeScreen();
@@ -723,14 +734,17 @@ if (strcmp(opponent.name, "Lilith: Mystic Siphoner") == 0) {
             if (opponent.health <= 0 && player.health <= 0) {
                 printf("Game ended in a draw!\n");
                 send_message(client_sock, "draw");
+                PlayAgain();
                 break;
             } else if (opponent.health <= 0) {
                 printf("You won!\n");
                 send_message(client_sock, "lose");
+                PlayAgain();
                 break;
             } else if (player.health <= 0) {
                 printf("You lost!\n");
                 send_message(client_sock, "win");
+                PlayAgain();
                 break;
             }
             
@@ -794,7 +808,8 @@ if (strcmp(opponent.name, "Lilith: Mystic Siphoner") == 0) {
         
         printf("\n");
     }
-    
+    PlayAgain(); // This now only handles input and decides whether to break or continue
+}
     close(client_sock);
     return 0;
 }
