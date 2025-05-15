@@ -341,10 +341,12 @@ void MenuScreen() {
     scanf("%s", choice);
     
     if (strcmp(choice, "menu") == 0) {
+        printf("\033[2J\033[H");
         MenuScreen();
     }
     else {
         printf("Invalid input. Please try again.\n");
+        printf("\033[2J\033[H");
         GuideMenu();
     }
 }
@@ -353,13 +355,16 @@ void MenuScreen() {
     scanf("%s", option);
 
     if (strcmp(option, "1") == 0 || strcmp(option, "play") == 0) {
+        printf("\033[2J\033[H");
         display_characters();
     }
     else if (strcmp(option, "2") == 0 || strcmp(option, "guide") == 0) {
+        printf("\033[2J\033[H");
         GuideMenu();
     }
     else {
         printf("Invalid choice. Please select from the choices only (1-3).\n");
+        printf("\033[2J\033[H");
         MenuScreen();
     }
 }
@@ -403,6 +408,7 @@ void HomeScreen() {
 
     if (strcmp(start, "start") == 0) {
         printf("\n");
+        printf("\033[2J\033[H");//clear screen
         MenuScreen();
         }
 }
